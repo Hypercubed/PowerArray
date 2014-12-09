@@ -43,6 +43,7 @@ describe('PowerArray', function () {
 			assert.equal(result[9], 1);
 			assert.equal(result[10], 2);
 			assert.equal(result[11], 3);
+			assert.ok(result instanceof PowerArray);
 		});
 	});
 

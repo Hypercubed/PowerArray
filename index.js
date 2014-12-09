@@ -15,17 +15,15 @@
    * @param {array} optional plain array to populate a power array
    */
   function PowerArray(array) {
-    var load = array || [],
-      self = this;
-    load.forEach(function (el) {
-      self.push(el);
-    });
+    var load = (arguments.length > 0) ? array.slice(0) : [];
+    load.__proto__ = PowerArray.prototype;
+    return load;
   }
 
   /*
    * inheritance
    */
-  PowerArray.prototype = new Array();
+  PowerArray.prototype = [];
 
   /**
    * addAndSort inserts a value and sorts the array after insertion to keep binary search working
@@ -49,13 +47,10 @@
     }
   };
 
-
   PowerArray.prototype.concat = function (arr) {
-    var results = new PowerArray(this);
-    arr.forEach(function (elem) {
-      results.push(elem);
-    });
-    return results;
+    var result = Array.prototype.concat.call(this, arr);
+    result.__proto__ = PowerArray.prototype;
+    return result;
   };
 
   /**
@@ -161,7 +156,8 @@
   PowerArray.prototype.slice = function () {
     var args = Array.prototype.slice.call(arguments),
       results = Array.prototype.slice.apply(this, args);
-    return new PowerArray(results);
+    results.__proto__ = PowerArray.prototype;
+    return results;
   };
 
   /**
@@ -175,7 +171,8 @@
   PowerArray.prototype.splice = function () {
     var args = Array.prototype.slice.call(arguments),
       results = Array.prototype.splice.apply(this, args);
-    return new PowerArray(results);
+    results.__proto__ = PowerArray.prototype;
+    return results;
   };
 
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
